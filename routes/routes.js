@@ -21,7 +21,7 @@ var cmodel=mongo.model('chats',cschema);
 
 //mongo connection
 
-mongo.connect('mongodb://jagdish123:mallige123@ds137661.mlab.com:18848/jddb');
+mongo.connect('mongodb://jagdish123:mallige123@ds018848.mlab.com:18848/jddb');
 /// bodyparser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var data;
