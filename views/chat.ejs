@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Main chat </title>
+    <link rel="stylesheet" href="./assets/materialize.min.css">
+    <style>h4{padding:5px 15px; }p{padding: 15px;padding-top: 0; }h{font-size: 20px;}</style>
+</head>
+<body>
+    <% include ./main.ejs %>
+
+    <div class="row" style="height: 450px;">
+
+        <div class="container">
+                <div class="l8">
+                        <div class="card">
+                            <h4 id='acct'><%= acct %></h4> <p><%= sex %> </p>
+                        </div>
+            
+            
+                    </div>
+
+        </div>
+        <div class="l4 light-blue"></div>
+        <div class="row">
+        <div class="container">
+            <div class="card" id="disp">
+                    <% load.forEach(function(item){
+                        %> <h4><%=item.name%> : <h> <%=item.msg%></h></h4>
+                        <%});%>
+
+            </div>
+        </div>
+
+                <div class="l8">
+                   <div class="container"> 
+                       <form method="POST" action="/chat">
+                    <div class="input-field">
+                        <input type="text" name="msg" id="msg" placeholder="Enter your message here">
+                     </div>
+                    </form>
+                     <div class="input-field">   
+                        <button class="btn-large waves-effect" id="btn">Send</button>
+                    </div>
+        
+                
+            </div>
+                </div>
+        
+            </div>
+    
+
+
+    </div>
+
+    
+</body>
+<script src="./assets/materialize.min.js"></script>
+<script src="./assets/socket.io.dev.js"></script>
+
+<script>
+
+
+var socket=io.connect('http://localhost:3000');
+var name=acct.innerHTML;
+var btn=document.getElementById('btn');
+btn.addEventListener('click',function(){
+   
+    var chat=document.getElementById('msg');
+    var chat=chat.value;
+    socket.emit('chat',{name:name,msg:chat});
+
+});
+var disp=document.getElementById('disp');
+socket.on('chat',function(data){
+    
+    disp.innerHTML+="<h4>"+name+": "+data.msg+"</h4>";
+})
+
+
+
+
+  
+</script>
+</html>

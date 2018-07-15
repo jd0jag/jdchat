@@ -1,0 +1,4 @@
+<% data.forEach(function(item){
+                %> <h4><%=item.name%> : <%=item.msg%></h4>
+                <%});%>
+    
