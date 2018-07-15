@@ -67,10 +67,10 @@ var name=acct.innerHTML;
 var btn=document.getElementById('btn');
 btn.addEventListener('click',function(){
    
-    var chat=document.getElementById('msg');
-    var chat=chat.value;
+    var t=document.getElementById('msg');
+    var chat=t.value;
     socket.emit('chat',{name:name,msg:chat});
-    chat.value="";
+    t.value="";
 
 });
 var disp=document.getElementById('disp');
