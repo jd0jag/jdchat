@@ -75,7 +75,7 @@ btn.addEventListener('click',function(){
 var disp=document.getElementById('disp');
 socket.on('chat',function(data){
     
-    disp.innerHTML+="<h4>"+name+": "+data.msg+"</h4>";
+    disp.innerHTML+="<h4>"+data.name+": "+data.msg+"</h4>";
 })
 
 

@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MY TEST FORM</title>
+    <title>JD Chat</title>
 </head>
 <body>
     <% include ./main.ejs %>
@@ -12,7 +12,7 @@
      <div class="form section "style="width:300px; padding:40px; " >
     
     <div class="">
-    <form action="/enter" method="post" >
+    <form action="/enter" method="post" onsubmit="return val()" >
         <div class="form-field">
        
             <label for="name">Your name</label>
@@ -22,7 +22,7 @@
         <div class="form-field">
         <p>
                 <label>
-                  <input name="sex" type="radio" value="Male" />
+                  <input name="sex" id="sex" type="radio" value="Male" />
                   <span>Male</span>
                 </label>
               </p>
@@ -48,7 +48,21 @@
 </div>
 
  </div>
+    <script>
+    function val(){
+      if(document.getElementById('name').value==""||document.getElementById('sex').value==""||document.getElementById('age').value=="")
+      {
+        alert("Fill in all the details");
+        return false;
+
+      }
+      else{
+        return true;
+      }
+      
+    }
     
+    </script>
     
 </body>
 </html>
