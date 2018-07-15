@@ -80,13 +80,13 @@ module.exports= function(app,server){
     
 
     io.on('connection',function(socket){
-        console.log("a connection is made");
+        
         socket.on('chat',function(data){
             io.sockets.emit('chat',data);
             cmodel(data).save(function(err){
                 if(err){console.log(err);}
                 else{
-                    console.log(data+" added to chat db");
+                    
                 }
             })
         });

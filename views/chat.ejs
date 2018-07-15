@@ -70,6 +70,7 @@ btn.addEventListener('click',function(){
     var chat=document.getElementById('msg');
     var chat=chat.value;
     socket.emit('chat',{name:name,msg:chat});
+    chat.value="";
 
 });
 var disp=document.getElementById('disp');
