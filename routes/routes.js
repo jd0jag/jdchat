@@ -29,7 +29,7 @@ mongo.connect('mongodb://jagdish123:mallige123@ds018848.mlab.com:18848/jddb');
 /// bodyparser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var data;
-var load;
+var load=[{}];
 var n; 
 var s;
 var a;
@@ -46,11 +46,15 @@ module.exports= function(app,server){
 
     app.get('/',function(req,res){
      //   res.render('home');
-        if(req.cookies!=undefined){
-            cmodel.find({},function(err,data){
+        if(req.cookies.user!=undefined){
+            
+            console.log(req.cookies.user);
+            var q=cmodel.find({}).sort({'time':-1}).limit(18);
+            q.exec(function(err,data){
                 if(err){console.log(err);}
                 else{
                      load=data;
+                     load.reverse();
                  }
                      res.render('chat',{load:load,acct:req.cookies.user,sex:'male'});
         });
@@ -66,7 +70,7 @@ module.exports= function(app,server){
         s=data.sex;
         a=data.age
         
-        res.cookie('user',data.name,{maxAge:60000,httpOnly: true});
+        res.cookie('user',data.name,{maxAge:100000,httpOnly: true});
         console.log(req.cookies);
         model(data).save(function(err,data){
             if(err){console.log(err);}
@@ -79,11 +83,9 @@ module.exports= function(app,server){
     });
 
     //get req to chat.ejs
-    app.post('/chat',function(req,res){
-        res.render('chat')
-    });
+    
     app.get('/chat',function(req,res) {
-        var load=[{}];
+        
 
         
         var q=cmodel.find({}).sort({'time':-1}).limit(18);
