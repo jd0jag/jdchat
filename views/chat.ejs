@@ -26,25 +26,24 @@
         <div class="row">
         <div class="container">
             <div class="card" id="disp">
-                    <% load.forEach(function(item){
+                    <% load.forEach(function(item){if(item.name!=undefined){
                         %> <h4><%=item.name%> : <h> <%=item.msg%></h></h4>
-                        <%});%>
+                        <%}});%>
 
             </div>
         </div>
-
+                <div class="container" id="typ"></div>
                 <div class="l8">
                    <div class="container"> 
-                       <form method="POST" action="/chat">
+                     <form onsubmit="return one()" >  
                     <div class="input-field">
                         <input type="text" name="msg" id="msg" placeholder="Enter your message here">
                      </div>
-                    </form>
+                    
                      <div class="input-field">   
                         <button class="btn-large waves-effect" id="btn">Send</button>
                     </div>
-        
-                
+                </form>                
             </div>
                 </div>
         
@@ -63,19 +62,34 @@
 
 
 var socket=io.connect(window.location.hostname);
+//var socket=io.connect("http://"+window.location.hostname+':3000');
+function one(){
+    //btn.click();
+    return false;
+}
 var name=acct.innerHTML;
 var btn=document.getElementById('btn');
+var t=document.getElementById('msg');
+var disp=document.getElementById('disp');
+var typ=document.getElementById('typ');
+t.addEventListener('keypress',function(){
+   console.log(name +"is typing"); socket.emit('typing',{name:name});
+});
+
+socket.on('typing',function(data){
+    typ.innerHTML="<em>"+name+" is typing </em>";
+});
 btn.addEventListener('click',function(){
    
-    var t=document.getElementById('msg');
+    
     var chat=t.value;
     socket.emit('chat',{name:name,msg:chat});
     t.value="";
 
 });
-var disp=document.getElementById('disp');
+
 socket.on('chat',function(data){
-    
+    typ.innerHTML="";
     disp.innerHTML+="<h4>"+data.name+": "+data.msg+"</h4>";
 })
 

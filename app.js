@@ -11,8 +11,5 @@ app.set('view engine','ejs');
 
 routes(app,server);
 
-app.get('/',function(req,res){
-    res.render('home');
 
-});
 
