@@ -67,9 +67,9 @@ module.exports= function(app,server){
         data=req.body;
         
         
-        res.cookie('user',data.name,{maxAge:40000,httpOnly: true});
-        res.cookie('sex',data.sex,{maxAge:40000,httpOnly: true});
-        res.cookie('age',data.age,{maxAge:40000,httpOnly: true});
+        res.cookie('user',data.name,{maxAge:400000,httpOnly: true});
+        res.cookie('sex',data.sex,{maxAge:400000,httpOnly: true});
+        res.cookie('age',data.age,{maxAge:400000,httpOnly: true});
         console.log(req.cookies);
         model(data).save(function(err,data){
             if(err){console.log(err);}
