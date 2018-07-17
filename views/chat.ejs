@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Main chat </title>
     <link rel="stylesheet" href="./assets/materialize.min.css">
-    <style>.h4{padding:5px 15px; }p{padding: 15px;padding-top: 0; }h{font-size: 20px;}</style>
+    <style>.h4{padding:5px 15px; }p{padding: 15px;padding-top: 0; }h{font-size: 20px;font-family:sans-serif}</style>
 </head>
 <body>
     <% include ./main.ejs %>
@@ -93,7 +93,7 @@ btn.addEventListener('click',function(){
 
 socket.on('chat',function(data){
     typ.innerHTML="";
-    disp.innerHTML+="<h4>"+data.name+": "+data.msg+"</h4>";
+    disp.innerHTML+="<h4>"+data.name+": <h>"+data.msg+"</h></h4>";
 })
 
 
