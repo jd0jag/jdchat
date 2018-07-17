@@ -33,21 +33,20 @@ var load=[{}];
 var n; 
 var s;
 var a;
+
 module.exports= function(app,server){
 
-    app.use(cookieParser());
-
-
-
+    app.use(cookieParser());   // cookie-parser middleware
     // establishing socket.io
 
-    var io=socket(server);
+    var io=socket(server);      // socket variable
 
 
     app.get('/',function(req,res){
-     //   res.render('home');
+    //   res.render('home');
         if(req.cookies.user!=undefined){
-            
+            n=req.cookies.user;
+            s=req.cookies.sex;
             console.log(req.cookies.user);
             var q=cmodel.find({}).sort({'time':-1}).limit(18);
             q.exec(function(err,data){
@@ -56,7 +55,7 @@ module.exports= function(app,server){
                      load=data;
                      load.reverse();
                  }
-                     res.render('chat',{load:load,acct:req.cookies.user,sex:'male'});
+                     res.render('chat',{load:load,acct:n,sex:s});
         });
     }
    else{
@@ -66,11 +65,11 @@ module.exports= function(app,server){
     app.post('/enter', urlencodedParser ,function(req,res){
         
         data=req.body;
-        n=data.name;
-        s=data.sex;
-        a=data.age
         
-        res.cookie('user',data.name,{maxAge:100000,httpOnly: true});
+        
+        res.cookie('user',data.name,{maxAge:40000,httpOnly: true});
+        res.cookie('sex',data.sex,{maxAge:40000,httpOnly: true});
+        res.cookie('age',data.age,{maxAge:40000,httpOnly: true});
         console.log(req.cookies);
         model(data).save(function(err,data){
             if(err){console.log(err);}
@@ -86,31 +85,28 @@ module.exports= function(app,server){
     
     app.get('/chat',function(req,res) {
         
-
-        
-        var q=cmodel.find({}).sort({'time':-1}).limit(18);
-            
+        if(req.cookies.user!=undefined)
+        { var q=cmodel.find({}).sort({'time':-1}).limit(18);
+            n=req.cookies.user;
+            s=req.cookies.sex;
             
            q.exec(function(err,data){
             if(err){console.log(err+"jd error");}
             else{
                  load=data;
                  load.reverse();
-                 
-                 console.log(load);
-            }
+                 }
                  res.render('chat',{load:load,acct:n,sex:s});
-        
-                 
-            
-        });
-        
+          });
+        }
+        else{
+            res.render('/');
+        }
     });
+    
 
     //socket handling
-    
-    
-
+   
     io.on('connection',function(socket){
         
         socket.on('chat',function(data){
@@ -118,20 +114,16 @@ module.exports= function(app,server){
             cmodel(data).save(function(err){
                 if(err){console.log(err);}
                 else{
-                    
+                    //nothing
                 }
             })
         });
         socket.on('typing',function(data){
             socket.broadcast.emit('typing',data);
-            //console.log(name);
+           // console.log(data);
+           
         })
         
     });
-
-
-
-
-
 
 }

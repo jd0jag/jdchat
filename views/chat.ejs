@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Main chat </title>
     <link rel="stylesheet" href="./assets/materialize.min.css">
-    <style>h4{padding:5px 15px; }p{padding: 15px;padding-top: 0; }h{font-size: 20px;}</style>
+    <style>.h4{padding:5px 15px; }p{padding: 15px;padding-top: 0; }h{font-size: 20px;}</style>
 </head>
 <body>
     <% include ./main.ejs %>
@@ -73,11 +73,14 @@ var t=document.getElementById('msg');
 var disp=document.getElementById('disp');
 var typ=document.getElementById('typ');
 t.addEventListener('keypress',function(){
-   console.log(name +"is typing"); socket.emit('typing',{name:name});
+   console.log(name +"is typing"); socket.emit('typing',{typer:name});
 });
 
+
+
 socket.on('typing',function(data){
-    typ.innerHTML="<em>"+name+" is typing </em>";
+    console.log(data);
+    typ.innerHTML="<em>"+data.typer+" is typing </em>";
 });
 btn.addEventListener('click',function(){
    
